@@ -44,6 +44,10 @@ def visualize(
     ## test ##
     #print(detection)
     
+    # vehicle parametresini buraya import edip taramayı durdur
+    
+    # bir kaç metre geri git 
+
     #servo.runServo()
     
     
