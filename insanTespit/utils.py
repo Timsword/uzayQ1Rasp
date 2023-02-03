@@ -50,7 +50,8 @@ def visualize(
     genelHareketler.dur(iha)
 
     # bir kaç metre geri git
-
+    genelHareketler.geri(iha)
+    
     # cismi ortala
     
     

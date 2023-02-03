@@ -23,7 +23,8 @@ def konumaGit(iha,konum):
 
 def dur(iha):
     iha.mode.name("BRAKE") # ? ? 
-    
+def eveDon(iha):
+    iha.mode.name("RTL")
 
 def ileri(iha):
     velocity2(5,0,0,0,iha)
