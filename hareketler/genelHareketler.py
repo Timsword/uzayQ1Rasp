@@ -43,7 +43,7 @@ def takeoff(altitude,iha):
 def dur(iha):
     iha.mode=VehicleMode("BRAKE") # ? ? 
 def eveDon(iha):
-    iha.mode=VehicleMode("RTL")
+    iha.mode=VehicleMode("RTL") # değiştirilebilir
 
 def ileri(iha):
     velocity2(5,0,0,0,iha)
