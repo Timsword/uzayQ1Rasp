@@ -2,7 +2,7 @@
 import RPi.GPIO as GPIO
 import time
 
-def SetAngle(angle):
+def servoCalistir(angle):
     # Set GPIO numbering mode
     GPIO.setmode(GPIO.BOARD)
 

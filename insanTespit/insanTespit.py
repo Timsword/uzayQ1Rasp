@@ -24,7 +24,7 @@ import utils
 
 
 def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
-        enable_edgetpu: bool) -> None:
+        enable_edgetpu: bool, iha) -> None:
   """Continuously run inference on images acquired from the camera.
 
   Args:
@@ -83,7 +83,7 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
     detection_result = detector.detect(input_tensor)
 
     # Draw keypoints and edges on input image
-    image = utils.visualize(image, detection_result)
+    image = utils.visualize(image, detection_result,iha=iha)
 
     # Calculate the FPS
     if counter % fps_avg_frame_count == 0:
@@ -106,7 +106,7 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
   cv2.destroyAllWindows()
 
 
-def main():
+def main(iha):
   parser = argparse.ArgumentParser(
       formatter_class=argparse.ArgumentDefaultsHelpFormatter)
   parser.add_argument(
@@ -143,8 +143,8 @@ def main():
   args = parser.parse_args()
 
   run(args.model, int(args.cameraId), args.frameWidth, args.frameHeight,
-      int(args.numThreads), bool(args.enableEdgeTPU))
+      int(args.numThreads), bool(args.enableEdgeTPU),iha=iha)
 
 
-if __name__ == '__main__':
-  main()
+# if __name__ == '__main__':
+#   main()

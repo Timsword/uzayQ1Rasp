@@ -16,6 +16,7 @@
 import cv2
 import numpy as np
 from tflite_support.task import processor
+import hareketler.genelHareketler as genelHareketler
 
 # servo motor icin
 import servo
@@ -30,7 +31,8 @@ _TEXT_COLOR = (0, 0, 255)  # red
 def visualize(
     image: np.ndarray,
     detection_result: processor.DetectionResult,
-) -> np.ndarray:
+    iha
+) -> np.ndarray: #return type of the function
   """Draws bounding boxes on the input image and return it.
 
   Args:
@@ -45,11 +47,15 @@ def visualize(
     #print(detection)
     
     # vehicle parametresini buraya import edip taramayı durdur
-    
-    # bir kaç metre geri git 
+    genelHareketler.dur(iha)
 
-    #servo.runServo()
+    # bir kaç metre geri git
+
+    # cismi ortala
     
+    
+    # run servo
+    servo.servoCalistir()
     
     # Draw bounding_box
     bbox = detection.bounding_box
