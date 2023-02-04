@@ -48,14 +48,14 @@ def visualize(
     ## test ##
     #print(detection)
     
-    # eğer araç durmuşsa işlemleri tekrarlama
+    # eğer araç tarama modundaysa durdur
     if(iha.mode == VehicleMode("AUTO")):
       # taramayı durdur
       genelHareketler.dur(iha)
       iha.mode = VehicleMode("GUIDED")
       time.sleep(1)
       # biraz geri git (?) ->
-      genelHareketler.geri(iha)
+      genelHareketler.geri(iha,süre=2)
 
       #genelHareketler.dur(iha)
 
@@ -68,12 +68,29 @@ def visualize(
 
     if(bbox.origin_x<x_top):
       print("sola git")
-    elif(bbox.origin_z>x_bottom):
+      genelHareketler.sola(iha, süre=2)
+      if((bbox.origin_x + bbox.width)>x_bottom):
+        print("az sağa git")
+        genelHareketler.saga(iha, süre=1)
+    elif(bbox.origin_x>x_bottom):
       print("sağa git")
-    if(bbox.origin_y<y_top):
+      genelHareketler.saga(iha, süre=2)
+      if((bbox.origin_x)<x_top):
+        print(" az sola git")
+        genelHareketler.sola(iha, süre=1)
+  
+    if(bbox.origin_y>y_top):
       print("ileri git")
-    elif(bbox.origin_y>y_bottom):
+      genelHareketler.ileri(iha, süre=2)
+      if((bbox.origin_y + bbox.width)<y_bottom):
+        print("az geri git")
+        genelHareketler.geri(iha, süre=1)
+    elif(bbox.origin_y<y_bottom):
       print("geri git")
+      genelHareketler.geri(iha, süre=2)
+      if((bbox.origin_y)>y_top):
+        print(" az ileri git")
+        genelHareketler.ileri(iha, süre=1)
     
     if ((bbox.origin_x>x_top and (bbox.origin_x + bbox.width) <x_bottom ) and (bbox.origin_y<y_top and (bbox.origin_y + bbox.height)>y_bottom)):
       servo.servoCalistir()

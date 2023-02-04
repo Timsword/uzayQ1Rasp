@@ -42,19 +42,18 @@ def dur(iha):
 def eveDon(iha):
     iha.mode=VehicleMode("RTL") # değiştirilebilir
 
-def ileri(iha):
+def ileri(iha, süre):
     velocity(5,0,0,0,iha)
-    time.sleep(2)
-def geri(iha):
+    time.sleep(süre)
+def geri(iha, süre):
     velocity(-5,0,0,0,iha)
-    time.sleep(2)
-
-def saga(iha):
+    time.sleep(süre)
+def saga(iha, süre):
     velocity(0,5,0,0,iha)
-    time.sleep(2)
-def sola(iha):
+    time.sleep(süre)
+def sola(iha, süre):
     velocity(0,-5,0,0,iha)
-    time.sleep(2)
+    time.sleep(süre)
 
 def yukari(iha):
     velocity(0,0,0,-2,iha)
