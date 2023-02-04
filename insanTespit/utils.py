@@ -17,6 +17,8 @@ import cv2
 import numpy as np
 from tflite_support.task import processor
 import hareketler.genelHareketler as genelHareketler
+from dronekit import VehicleMode
+import time
 
 # servo motor icin
 import servo
@@ -46,19 +48,39 @@ def visualize(
     ## test ##
     #print(detection)
     
-    # vehicle parametresini buraya import edip taramayı durdur
-    genelHareketler.dur(iha)
+    # eğer araç durmuşsa işlemleri tekrarlama
+    if(iha.mode == VehicleMode("AUTO")):
+      # taramayı durdur
+      genelHareketler.dur(iha)
+      iha.mode = VehicleMode("GUIDED")
+      time.sleep(1)
+      # biraz geri git (?) ->
+      genelHareketler.geri(iha)
 
-    # bir kaç metre geri git
-    genelHareketler.geri(iha)
+      #genelHareketler.dur(iha)
+
+      
     
-    # cismi ortala
+    # cismi ortala # -> hedef koordinatlar ayarlanacak.
+    x_top = 1.0; y_top=1.0
+    x_bottom = 1.0; y_bottom = 1.0
     
+
+    if(bbox.origin_x<x_top):
+      print("sola git")
+    elif(bbox.origin_z>x_bottom):
+      print("sağa git")
+    if(bbox.origin_y<y_top):
+      print("ileri git")
+    elif(bbox.origin_y>y_bottom):
+      print("geri git")
     
+    if ((bbox.origin_x>x_top and (bbox.origin_x + bbox.width) <x_bottom ) and (bbox.origin_y<y_top and (bbox.origin_y + bbox.height)>y_bottom)):
+      servo.servoCalistir()
     # run servo
-    servo.servoCalistir()
     
-    # Draw bounding_box
+    
+    # Draw bounding_box"1
     bbox = detection.bounding_box
     start_point = bbox.origin_x, bbox.origin_y
     end_point = bbox.origin_x + bbox.width, bbox.origin_y + bbox.height

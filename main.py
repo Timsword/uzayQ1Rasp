@@ -34,7 +34,7 @@ genelHareketler.konumaGit(iha,konum)
 alanTaramaThread.start()
 #tespitThread.start()
 time.sleep(3)
-testThread.start()
+#testThread.start()
 
 
 
