@@ -55,7 +55,7 @@ def visualize(
       iha.mode = VehicleMode("GUIDED")
       time.sleep(1)
       # biraz geri git (?) ->
-      genelHareketler.geri(iha,süre=2)
+      genelHareketler.geri(iha,time=2)
 
       #genelHareketler.dur(iha)
 
@@ -68,33 +68,35 @@ def visualize(
 
     if(bbox.origin_x<x_top):
       print("sola git")
-      genelHareketler.sola(iha, süre=2)
+      genelHareketler.sola(iha, time=2)
       if((bbox.origin_x + bbox.width)>x_bottom):
         print("az sağa git")
-        genelHareketler.saga(iha, süre=1)
+        genelHareketler.saga(iha, time=1)
     elif(bbox.origin_x>x_bottom):
       print("sağa git")
-      genelHareketler.saga(iha, süre=2)
+      genelHareketler.saga(iha, time=2)
       if((bbox.origin_x)<x_top):
         print(" az sola git")
-        genelHareketler.sola(iha, süre=1)
+        genelHareketler.sola(iha, time=1)
   
     if(bbox.origin_y>y_top):
       print("ileri git")
-      genelHareketler.ileri(iha, süre=2)
+      genelHareketler.ileri(iha, time=2)
       if((bbox.origin_y + bbox.width)<y_bottom):
         print("az geri git")
-        genelHareketler.geri(iha, süre=1)
+        genelHareketler.geri(iha, time=1)
     elif(bbox.origin_y<y_bottom):
       print("geri git")
-      genelHareketler.geri(iha, süre=2)
+      genelHareketler.geri(iha, time=2)
       if((bbox.origin_y)>y_top):
         print(" az ileri git")
-        genelHareketler.ileri(iha, süre=1)
+        genelHareketler.ileri(iha, time=1)
     
     if ((bbox.origin_x>x_top and (bbox.origin_x + bbox.width) <x_bottom ) and (bbox.origin_y<y_top and (bbox.origin_y + bbox.height)>y_bottom)):
       servo.servoCalistir()
-    # run servo
+      time.sleep(4)
+      genelHareketler.eveDon(iha)
+
     
     
     # Draw bounding_box"1

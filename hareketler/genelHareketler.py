@@ -38,22 +38,22 @@ def takeoff(altitude,iha):
     time.sleep(1)
 
 def dur(iha):
-    iha.mode=VehicleMode("BRAKE") # ? ? 
+    iha.mode=VehicleMode("BRAKE")  # ? ?
 def eveDon(iha):
-    iha.mode=VehicleMode("RTL") # değiştirilebilir
+    iha.mode=VehicleMode("RTL")  # değiştirilebilir
 
-def ileri(iha, süre):
+def ileri(iha, time):
     velocity(5,0,0,0,iha)
-    time.sleep(süre)
-def geri(iha, süre):
+    time.sleep(time)
+def geri(iha, time):
     velocity(-5,0,0,0,iha)
-    time.sleep(süre)
-def saga(iha, süre):
+    time.sleep(time)
+def saga(iha, time):
     velocity(0,5,0,0,iha)
-    time.sleep(süre)
-def sola(iha, süre):
+    time.sleep(time)
+def sola(iha, time):
     velocity(0,-5,0,0,iha)
-    time.sleep(süre)
+    time.sleep(time)
 
 def yukari(iha):
     velocity(0,0,0,-2,iha)
