@@ -42,24 +42,26 @@ def dur(iha):
 def eveDon(iha):
     iha.mode=VehicleMode("RTL")  # değiştirilebilir
 
-def ileri(iha, time):
-    velocity(5,0,0,0,iha)
+def ileri(iha, time, hiz):
+    velocity(hiz,0,0,0,iha)
     time.sleep(time)
-def geri(iha, time):
-    velocity(-5,0,0,0,iha)
+def geri(iha, time, hiz):
+    velocity(-hiz,0,0,0,iha)
     time.sleep(time)
-def saga(iha, time):
-    velocity(0,5,0,0,iha)
+def saga(iha, time, hiz):
+    velocity(0,hiz,0,0,iha)
     time.sleep(time)
-def sola(iha, time):
-    velocity(0,-5,0,0,iha)
+def sola(iha, time, hiz):
+    velocity(0,-hiz,0,0,iha)
     time.sleep(time)
 
-def yukari(iha):
+
+# önemsiz
+def yukari(iha, hiz):
     velocity(0,0,0,-2,iha)
     time.sleep(2)
 
-def asagi(iha):
+def asagi(iha, hiz):
     velocity(0,0,0,2,iha)
     time.sleep(2)
 

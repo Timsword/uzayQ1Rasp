@@ -29,6 +29,11 @@ _FONT_SIZE = 1
 _FONT_THICKNESS = 1
 _TEXT_COLOR = (0, 0, 255)  # red
 
+def kameraGecikmesi(iha):
+  iha.mode = VehicleMode("BRAKE")
+  time.sleep(5)
+  iha.mode = VehicleMode("GUIDED")
+
 
 def visualize(
     image: np.ndarray,
@@ -62,35 +67,44 @@ def visualize(
       
     
     # cismi ortala # -> hedef koordinatlar ayarlanacak.
-    x_top = 1.0; y_top=1.0
-    x_bottom = 1.0; y_bottom = 1.0
-    
+    x_top = 195.0; y_top=115.0
+    x_bottom = 445.0; y_bottom = 365.0
+    buyuk_hiz=5
+    kucuk_hiz=2
+
 
     if(bbox.origin_x<x_top):
       print("sola git")
-      genelHareketler.sola(iha, time=2)
+      genelHareketler.sola(iha, time=2,hiz=buyuk_hiz)
+      kameraGecikmesi(iha)
       if((bbox.origin_x + bbox.width)>x_bottom):
         print("az sağa git")
-        genelHareketler.saga(iha, time=1)
+        genelHareketler.saga(iha, time=1,hiz=kucuk_hiz)
+        kameraGecikmesi(iha)
     elif(bbox.origin_x>x_bottom):
       print("sağa git")
-      genelHareketler.saga(iha, time=2)
+      genelHareketler.saga(iha, time=2,hiz=buyuk_hiz)
+      kameraGecikmesi(iha)
       if((bbox.origin_x)<x_top):
         print(" az sola git")
-        genelHareketler.sola(iha, time=1)
-  
+        genelHareketler.sola(iha, time=1,hiz=kucuk_hiz)
+        kameraGecikmesi(iha)
     if(bbox.origin_y>y_top):
       print("ileri git")
-      genelHareketler.ileri(iha, time=2)
+      genelHareketler.ileri(iha, time=2,hiz=buyuk_hiz)
+      kameraGecikmesi(iha)
       if((bbox.origin_y + bbox.width)<y_bottom):
         print("az geri git")
-        genelHareketler.geri(iha, time=1)
+        genelHareketler.geri(iha, time=1,hiz=kucuk_hiz)
+        kameraGecikmesi(iha)
     elif(bbox.origin_y<y_bottom):
       print("geri git")
-      genelHareketler.geri(iha, time=2)
+      genelHareketler.geri(iha, time=2,hiz=buyuk_hiz)
+      kameraGecikmesi(iha)
       if((bbox.origin_y)>y_top):
         print(" az ileri git")
-        genelHareketler.ileri(iha, time=1)
+        genelHareketler.ileri(iha, time=1,hiz=kucuk_hiz)
+        kameraGecikmesi(iha)
     
     if ((bbox.origin_x>x_top and (bbox.origin_x + bbox.width) <x_bottom ) and (bbox.origin_y<y_top and (bbox.origin_y + bbox.height)>y_bottom)):
       servo.servoCalistir()
