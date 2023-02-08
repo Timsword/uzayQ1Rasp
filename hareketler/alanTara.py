@@ -22,14 +22,29 @@ def alanTaraKare(uzunluk, iha):
     i=0
     lat = iha.location.global_relative_frame.lat
     lon = iha.location.global_relative_frame.lon
+    
+    ###### simple_goto parameters
+    refLocation= iha.location.global_relative_frame
+    hiz = 1 # ihanın hareket hızı m/s
+    timeUzun = uzunluk / hiz # her iterasyonda beklenmesi gereken süre
+    timeKisa = 5 # kısa adımın uzunluğuna (smallMove) ve hıza göre değiştirilecek.
+    
     while(i<iterasyon):
+        # ###### simple_goto # eğer command hızı ayarlanamazsa kullanılacak#
+        # #uzun adım
+        # refLocation.lat = refLocation.lat + uzunlukDunya
+        # iha.simple_goto(refLocation)
+        # time.sleep(timeUzun)
+        # #kısa adım
+        # refLocation.lon = refLocation.lon + smallMove
+        # iha.simple_goto(refLocation)
+        # time.sleep(timeKisa)
         
-        print(iterasyon)
+        #
         lat = lat + uzunlukDunya
         #lon
         komut.add(Command(0, 0, 0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, 0, 0, 0, 0, 0, 0, lat, lon, 10))
-
-
+        #komut.
         lon= lon + smallMove
         komut.add(Command(0, 0, 0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, 0, 0, 0, 0, 0, 0, lat, lon, 10))
 
@@ -41,7 +56,7 @@ def alanTaraKare(uzunluk, iha):
     print("Komutlar yukleniyor")
 
     iha.mode=VehicleMode("AUTO")
-    while True:
+    while (iha.mode==VehicleMode("AUTO")):
         next_waypoint = komut.next
         print("Next command : %s " % next_waypoint)
         time.sleep(2)

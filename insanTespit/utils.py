@@ -30,9 +30,10 @@ _FONT_THICKNESS = 1
 _TEXT_COLOR = (0, 0, 255)  # red
 
 def kameraGecikmesi(iha):
+  # görüntü geç geldiği için her hareket edildiğinde durma -> *todo süre test edilecek
   iha.mode = VehicleMode("BRAKE")
   time.sleep(5)
-  iha.mode = VehicleMode("GUIDED")
+  iha.mode = VehicleMode("GUIDED") # -> *todo guided sleep üstüne eklenebilir 
 
 
 def visualize(
@@ -60,19 +61,23 @@ def visualize(
       iha.mode = VehicleMode("GUIDED")
       time.sleep(1)
       # biraz geri git (?) ->
-      genelHareketler.geri(iha,time=2)
+      genelHareketler.geri(iha,time=2, hiz=5) # -> *todo test edilecek
 
       #genelHareketler.dur(iha)
 
       
     
-    # cismi ortala # -> hedef koordinatlar ayarlanacak.
+    ########### yakalanan cismin ortalanması ############## -> *todo test edilecek
+
+    # ortalamak için gereken çerçeve
     x_top = 195.0; y_top=115.0
     x_bottom = 445.0; y_bottom = 365.0
+
+    # ortalama sürecinde hareket hızları
     buyuk_hiz=5
     kucuk_hiz=2
 
-
+    # cismi ortalama operasyonu
     if(bbox.origin_x<x_top):
       print("sola git")
       genelHareketler.sola(iha, time=2,hiz=buyuk_hiz)
