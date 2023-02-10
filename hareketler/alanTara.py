@@ -54,7 +54,7 @@ def alanTaraKare(uzunluk, iha):
 
     komut.upload()
     print("Komutlar yukleniyor")
-
+    iha.parameters['WPNAV_SPEED'] = 100       
     iha.mode=VehicleMode("AUTO")
     while (iha.mode==VehicleMode("AUTO")):
         next_waypoint = komut.next
