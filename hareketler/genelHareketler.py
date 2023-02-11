@@ -17,6 +17,7 @@ def velocity(velocity_x, velocity_y,yaw_rate,velocity_z, iha):
 
 def konumaGit(iha,konum):
     iha.simple_goto(konum)
+    time.sleep(20) # *todo test edilmeli gidene kadar 20 saniye bekle???
 
 def takeoff(altitude,iha):
 

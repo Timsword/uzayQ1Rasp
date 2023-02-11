@@ -1,10 +1,11 @@
 from dronekit import connect, VehicleMode, LocationGlobalRelative
 import hareketler.alanTara as alanTarama
 import hareketler.genelHareketler as genelHareketler
-#import insanTespit.insanTespit as insanTespit
+import insanTespit.insanTespit as insanTespit
 import threading
 import test
 import time
+import re
 
 def connectToVehicle():
 	iha = connect('127.0.0.1:14550', wait_ready=True) # 127.0.0.1:14550 -> değiştirilecek
@@ -34,19 +35,75 @@ def connectToVehicle():
 # 			elif("yuvarlakTara" in text):
 # 				alan
 
+
+
+
 # ihaya bağlan
 iha = connectToVehicle()
+
+# ################################### YER İSTASYONU İLETİŞİM KODU ##################################
+# @iha.on_message('STATUSTEXT')
+# def handle_statustext_message(self, name, message):
+# 	text = message.text
+# 	if text.startswith("commandGCS:"):
+# 		# Process the message
+# 		print("Received command:", text)
+# 		if("alanTaraKare" in text):
+# 			# değişkenleri topla
+# 			text = re.findall(r"\,(.*?),", text)
+# 			# eğer zaten istenen yükseklikteyse direkt istenen konuma git
+# 			if(iha.location.global_relative_frame.alt >= float(text[0]) * 0.90):
+# 				genelHareketler.konumaGit(iha,konum)
+# 			else:
+# 				genelHareketler.takeoff(15,iha)
+# 				konum = LocationGlobalRelative(text[1],text[2],10)
+# 				genelHareketler.konumaGit(iha,konum)
+
+# 			# threadleri tanımla
+# 			tespitThread = threading.Thread(target=insanTespit.main,args=iha)
+# 			alanTaramaThread = threading.Thread(target=alanTarama.alanTaraKare,args=(text[0],text[1],text[2],iha)) # uzunluk, latitude, longitude
+
+# 			# threadleri başlat
+# 			tespitThread.start()
+# 			time.sleep(5) # kamera açılana kadar bekle
+# 			alanTaramaThread.start()
+
+# 		elif("RTL" in text):
+# 			if tespitThread.is_alive():
+# 				tespitThread.stopped = True
+# 				tespitThread.join()
+# 			if alanTaramaThread.is_alive():
+# 				alanTaramaThread.stopped = True
+# 				alanTaramaThread.join()
+# 			iha.mode = VehicleMode("RTL")
+# 		elif("BRAKE" in text):
+# 			if tespitThread.is_alive():
+# 				tespitThread.stopped = True
+# 				tespitThread.join()
+# 			if alanTaramaThread.is_alive():
+# 				alanTaramaThread.stopped = True
+# 				alanTaramaThread.join()
+# 			iha.mode = VehicleMode("BRAKE")
+# 		elif("LAND" in text):
+# 			if tespitThread.is_alive():
+# 				tespitThread.stopped = True
+# 				tespitThread.join()
+# 			if alanTaramaThread.is_alive():
+# 				alanTaramaThread.stopped = True
+# 				alanTaramaThread.join()
+# 			iha.mode = VehicleMode("LAND")
+
+
+# while True:
+# 	time.sleep(1)
+# ########################################################################################
+
+
 
 genelHareketler.takeoff(15,iha)
 
 alanTaramaThread = threading.Thread(target=alanTarama.alanTaraKare,args=(20,iha)) # kare -> çevre, yuvarlak -> çap veya yarıçap
-#tespitThread = threading.Thread(target=insanTespit.main,args=iha)
-
-
-#kontrolThread
-#testThread = threading.Thread(target=test.hareketiKesVeGeriGit,args=(iha,))
-
-
+tespitThread = threading.Thread(target=insanTespit.main,args=iha)
 
 
 # konumu tanımla
@@ -56,18 +113,6 @@ konum = iha.location.global_relative_frame # -> güncel konum
 genelHareketler.konumaGit(iha,konum)
 
 # alanı taramaya başla.
+tespitThread.start()
+time.sleep(5) # kameranın açılmasını bekle
 alanTaramaThread.start()
-#tespitThread.start()
-
-#time.sleep(3)
-#testThread.start()
-
-################ Yer istasyonu iletişim
-#yerIstasyonuThread = threading.Thread(target=komutDinle, args=iha)
-#yerIstasyonuThread.start()
-
-
-
-
-
-

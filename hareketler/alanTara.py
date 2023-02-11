@@ -7,7 +7,7 @@ bigMove = 0.00009 # 10 metre
 smallMove = 0.000045 # 5 metre
 
 movementConstant = 0.00001 # 1.1 metre
-
+# *todo gcs için değişkenler eklenmeli
 def alanTaraKare(uzunluk, iha):
     
     komut = iha.commands
