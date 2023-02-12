@@ -76,7 +76,7 @@ def visualize(
     # ortalama sürecinde hareket hızları
     buyuk_hiz=5
     kucuk_hiz=2
-
+    print(detection)
     # cismi ortalama operasyonu
     if(bbox.origin_x<x_top):
       print("sola git")
@@ -112,7 +112,7 @@ def visualize(
         kameraGecikmesi(iha)
     
     if ((bbox.origin_x>x_top and (bbox.origin_x + bbox.width) <x_bottom ) and (bbox.origin_y<y_top and (bbox.origin_y + bbox.height)>y_bottom)):
-      servo.servoCalistir()
+      servo.runServo()
       time.sleep(4)
       genelHareketler.eveDon(iha)
 

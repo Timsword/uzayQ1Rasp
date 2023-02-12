@@ -41,7 +41,7 @@ def connectToVehicle():
 # ihaya bağlan
 iha = connectToVehicle()
 
-# ################################### YER İSTASYONU İLETİŞİM KODU ##################################
+################################### YER İSTASYONU İLETİŞİM KODU ##################################
 # @iha.on_message('STATUSTEXT')
 # def handle_statustext_message(self, name, message):
 # 	text = message.text
@@ -52,11 +52,11 @@ iha = connectToVehicle()
 # 			# değişkenleri topla
 # 			text = re.findall(r"\,(.*?),", text)
 # 			# eğer zaten istenen yükseklikteyse direkt istenen konuma git
-# 			if(iha.location.global_relative_frame.alt >= float(text[0]) * 0.90):
+# 			if(iha.location.global_relative_frame.alt >= float(text[2]) * 0.90):
 # 				genelHareketler.konumaGit(iha,konum)
 # 			else:
 # 				genelHareketler.takeoff(15,iha)
-# 				konum = LocationGlobalRelative(text[1],text[2],10)
+# 				konum = LocationGlobalRelative(text[0],text[1],10)
 # 				genelHareketler.konumaGit(iha,konum)
 
 # 			# threadleri tanımla
@@ -96,7 +96,7 @@ iha = connectToVehicle()
 
 # while True:
 # 	time.sleep(1)
-# ########################################################################################
+########################################################################################
 
 
 
