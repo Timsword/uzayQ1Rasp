@@ -8,7 +8,7 @@ import time
 import re
 
 def connectToVehicle():
-	iha = connect('127.0.0.1:14550', wait_ready=True) # 127.0.0.1:14550 -> değiştirilecek
+	iha = connect('/dev/serial0', baud=921600, wait_ready=True,heartbeat_timeout=30) # 127.0.0.1:14550 -> değiştirilecek
 	return iha
 
 # def komutDinle(iha):
@@ -107,8 +107,9 @@ genelHareketler.takeoff(10,iha)
 konum = iha.location.global_relative_frame # -> güncel konum
 
 #threadleri tanımla
+tespitThread = threading.Thread(target=insanTespit.main,args=(iha,))
 alanTaramaThread = threading.Thread(target=alanTarama.alanTaraKare,args=(20,iha,konum)) # kare -> çevre, yuvarlak -> çap veya yarıçap
-tespitThread = threading.Thread(target=insanTespit.main,args=iha)
+
 
 
 # konuma git

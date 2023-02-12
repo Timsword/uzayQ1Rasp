@@ -20,7 +20,7 @@ import cv2
 from tflite_support.task import core
 from tflite_support.task import processor
 from tflite_support.task import vision
-import utils
+from . import utils
 
 
 def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
@@ -113,7 +113,7 @@ def main(iha):
       '--model',
       help='Path of the object detection model.',
       required=False,
-      default='human_bigdata_20epc.tflite')
+      default='/home/uzayktuq1/Desktop/ucustest2/uzayQ1Rasp/insanTespit/human_bigdata_20epc.tflite')
   parser.add_argument(
       '--cameraId', help='Id of camera.', required=False, type=int, default=0)
   parser.add_argument(

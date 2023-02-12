@@ -19,9 +19,7 @@ from tflite_support.task import processor
 import hareketler.genelHareketler as genelHareketler
 from dronekit import VehicleMode
 import time
-
-# servo motor icin
-import servo
+from . import servo 
 
 _MARGIN = 10  # pixels
 _ROW_SIZE = 10  # pixels
