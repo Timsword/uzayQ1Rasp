@@ -8,7 +8,7 @@ smallMove = 0.000045 # 5 metre
 
 movementConstant = 0.00001 # 1.1 metre
 # *todo gcs için değişkenler eklenmeli
-def alanTaraKare(uzunluk, iha):
+def alanTaraKare(uzunluk, iha, ilkKonum):
     
     komut = iha.commands
 
@@ -17,37 +17,25 @@ def alanTaraKare(uzunluk, iha):
 
     komut.add(Command(0, 0, 0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, mavutil.mavlink.MAV_CMD_NAV_TAKEOFF, 0, 0, 0, 0, 0, 0, 0, 0, 10))
 
+    komut.add(Command(0, 0, 0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, 0, 0, 0, 0, 0, 0, ilkKonum.lat, ilkKonum.lon, 10))
+
+
     uzunlukDunya = uzunluk*movementConstant
     iterasyon=uzunluk/5
     i=0
     lat = iha.location.global_relative_frame.lat
     lon = iha.location.global_relative_frame.lon
     
-    ###### simple_goto parameters
-    refLocation= iha.location.global_relative_frame
-    hiz = 1 # ihanın hareket hızı m/s
-    timeUzun = uzunluk / hiz # her iterasyonda beklenmesi gereken süre
-    timeKisa = 5 # kısa adımın uzunluğuna (smallMove) ve hıza göre değiştirilecek.
-    
     while(i<iterasyon):
-        # ###### simple_goto # eğer command hızı ayarlanamazsa kullanılacak#
-        # #uzun adım
-        # refLocation.lat = refLocation.lat + uzunlukDunya
-        # iha.simple_goto(refLocation)
-        # time.sleep(timeUzun)
-        # #kısa adım
-        # refLocation.lon = refLocation.lon + smallMove
-        # iha.simple_goto(refLocation)
-        # time.sleep(timeKisa)
-        
-        #
+        # enlem hareket
         lat = lat + uzunlukDunya
-        #lon
         komut.add(Command(0, 0, 0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, 0, 0, 0, 0, 0, 0, lat, lon, 10))
-        #komut.
+        
+        # boylam hareket
         lon= lon + smallMove
         komut.add(Command(0, 0, 0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, 0, 0, 0, 0, 0, 0, lat, lon, 10))
 
+        # hareket yönü çevrimi
         uzunlukDunya=-uzunlukDunya
         i=i+1
         
@@ -56,12 +44,10 @@ def alanTaraKare(uzunluk, iha):
     print("Komutlar yukleniyor")
     iha.parameters['WPNAV_SPEED'] = 100       
     iha.mode=VehicleMode("AUTO")
-    while (iha.mode==VehicleMode("AUTO")):
-        next_waypoint = komut.next
-        print("Next command : %s " % next_waypoint)
-        time.sleep(2)
-
-    #return komut
+    # while (iha.mode==VehicleMode("AUTO")):
+    #     next_waypoint = komut.next
+    #     print("Next command : %s " % next_waypoint)
+    #     time.sleep(2)
 
 def getSiradakiKonum(original_location, bearing, distance):
     """

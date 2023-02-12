@@ -59,9 +59,10 @@ iha = connectToVehicle()
 # 				konum = LocationGlobalRelative(text[0],text[1],10)
 # 				genelHareketler.konumaGit(iha,konum)
 
+# 			konum = LocationGlobalRelative(text[0],text[1], 10) # enlem, boylam, yükseklik
 # 			# threadleri tanımla
 # 			tespitThread = threading.Thread(target=insanTespit.main,args=iha)
-# 			alanTaramaThread = threading.Thread(target=alanTarama.alanTaraKare,args=(text[0],text[1],text[2],iha)) # uzunluk, latitude, longitude
+# 			alanTaramaThread = threading.Thread(target=alanTarama.alanTaraKare,args=(text[2], iha, konum)) # uzunluk, iha, konum
 
 # 			# threadleri başlat
 # 			tespitThread.start()
@@ -99,18 +100,19 @@ iha = connectToVehicle()
 ########################################################################################
 
 
+#kalkış yap
+genelHareketler.takeoff(10,iha)
 
-genelHareketler.takeoff(15,iha)
+#konumu tanımla
+konum = iha.location.global_relative_frame # -> güncel konum
 
-alanTaramaThread = threading.Thread(target=alanTarama.alanTaraKare,args=(20,iha)) # kare -> çevre, yuvarlak -> çap veya yarıçap
+#threadleri tanımla
+alanTaramaThread = threading.Thread(target=alanTarama.alanTaraKare,args=(20,iha,konum)) # kare -> çevre, yuvarlak -> çap veya yarıçap
 tespitThread = threading.Thread(target=insanTespit.main,args=iha)
 
 
-# konumu tanımla
-konum = iha.location.global_relative_frame # -> güncel konum
-
 # konuma git
-genelHareketler.konumaGit(iha,konum)
+#genelHareketler.konumaGit(iha,konum)
 
 # alanı taramaya başla.
 tespitThread.start()
